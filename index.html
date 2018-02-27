@@ -14,16 +14,36 @@
         Your browser does not support the HTML5 canvas tag.
     </canvas>
     <div>
-    <h3> Select A Shape : </h3><hr>
-    <input type="button" value="Line" onclick="shapeType='Line'"><br><input type="button" value="Triangle" onclick="shapeType='Triangle'"><br><input type="button" value="Rectangle" onclick="shapeType='Rectangle'"><br><input type="button" value="Circle" onclick="shapeType='Circle'">
+        <h3 id="shapeIndicator" style="color:red;" > Select Shape : Line</h3>
+        <hr>
+        <input type="button" value="Line" onclick="setShapeType('Line')">
+        <br>
+        <input type="button" value="Triangle" onclick="setShapeType('Triangle')">
+        <br>
+        <input type="button" value="Rectangle" onclick="setShapeType('Rectangle')">
+        <br>
+        <input type="button" value="Circle" onclick="setShapeType('Circle')">
+        <br>
+        <input type="button" value="Clear" onclick="if(confirm('Confirm Clear!')) { clearCanvas(ctx,canvas); obj=[]; }">
+        <!--Picker-->
+        <br>
+        <hr>
+        <div>
+            <input style="padding: 0px 0px;width: 100px;" type="color" id="pickedColor" />
+            <input style="padding: 0px 0px;width: 40px;" type="checkbox" id="pickerEnabled" />
+        </div>
+        <br>
+        <br>
+        <hr>
+        <input type="button" value="Save as PNG" id="saveAsPNG">
     </div>
 
-    <script type="text/javascript" src="point.js" > </script>
-    <script type="text/javascript" src="line.js" > </script>
-    <script type="text/javascript" src="triangle.js" > </script>
-    <script type="text/javascript" src="rectangle.js" > </script>
-    <script type="text/javascript" src="circle.js" > </script>
-    <script type="text/javascript" src="index.js" > </script>
+    <script type="text/javascript" src="point.js"> </script>
+    <script type="text/javascript" src="line.js"> </script>
+    <script type="text/javascript" src="triangle.js"> </script>
+    <script type="text/javascript" src="rectangle.js"> </script>
+    <script type="text/javascript" src="circle.js"> </script>
+    <script type="text/javascript" src="index.js"> </script>
     <h3>Draw Triangles</h3>
     <pre>*Drag To Draw *Move Drawn Triangle *Double Tap to Delete</pre>
 </body>

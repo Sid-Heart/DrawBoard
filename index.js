@@ -10,7 +10,7 @@ var p3 = new Point(0, 0);
 var p4 = new Point(0, 0);
 var obj = [], len = 0;
 var pp1, pp2, pp3;
-var shapeType = "Triangle";
+var shapeType = "Line";
 
 function mouseDown(event) {
     console.log(shapeType);
@@ -32,7 +32,7 @@ function mouseDrag(event) {
     if (moving >= 0) {
         pp1 = new Point((p2.x - p1.x), (p2.y - p1.y));
         clearCanvas(ctx, canvas);
-        drawAllTri(moving);
+        drawAll(moving);
 
         var t = getNewShape(obj[moving].name, p1, p2);
         t.assignFrom(obj[moving])
@@ -40,7 +40,7 @@ function mouseDrag(event) {
         t.drawPartial();
     } else {
         clearCanvas(ctx, canvas);
-        drawAllTri();
+        drawAll();
 
         getNewShape(shapeType, p1, p2).drawPartial();
         moving = -1;
@@ -69,16 +69,19 @@ function mouseUp(event) {
             obj.push(newShape);
     }
     clearCanvas(ctx, canvas);
-    drawAllTri();
-    drawAllTri();
+    drawAll();
     moving = -1;
     flag = 0;
 }
 function getRandomColor() {
     var letters = '0123456789ABCDEF';
     var color = '#';
-    for (var i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
+    if (document.getElementById("pickerEnabled").checked) {
+        color=document.getElementById("pickedColor").value;
+    } else {
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
     }
     return color;
 }
@@ -92,7 +95,7 @@ function mouseDouble(event) {
         obj.length--;
     }
     clearCanvas(ctx, canvas);
-    drawAllTri();
+    drawAll();
     console.log(obj);
     flag = 0;
 }
@@ -101,7 +104,7 @@ function clearCanvas(context, canvas) {
     context.clearRect(0, 0, canvas.width, canvas.height);
 }
 
-function drawAllTri(moved) {
+function drawAll(moved) {
     for (var i = 0; i < obj.length; i++) {
         if (moved === i)
             continue;
@@ -118,4 +121,9 @@ function getNewShape(shapeup, p1, p2) {
         return new Circle(p1, p2);
     if (shapeup === "Line")
         return new Line(p1, p2);
+}
+
+function setShapeType(st){
+    shapeType=st;
+    document.getElementById("shapeIndicator").innerHTML="Select Shape : "+st;
 }
