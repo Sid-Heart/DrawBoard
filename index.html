@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title> Triangles </title>
+</head>
+<body>
+
+<canvas id="myCanvas" width="500" height="400" style="border:1px solid #000000;" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)"  onmousemove="mouseDrag(event)" ondblclick="mouseDouble(event)" onmouseout="mouseUp(event)">
+Your browser does not support the HTML5 canvas tag.
+</canvas>
+
+<script>
+function clearCanvas(context, canvas) {
+    context.clearRect(0, 0, canvas.width, canvas.height);
+}
+function NewPoint(p){
+    return new Point(p.x,p.y);
+}
+var canvas=document.getElementById("myCanvas");
+canvas.width=window.innerWidth-20;
+canvas.height=window.innerHeight-120;
+
+var ctx=canvas.getContext("2d");
+var flag=0;
+function Point(x,y){
+    this.x=x;
+    this.y=y;
+}
+
+function Triangle(x,y,z){
+    this.x=x;
+    this.y=y;
+    this.z=z;
+    this.c=getRandomColor();
+}
+var moving=-1;
+var p1=new Point(0,0);
+var p2=new Point(0,0);
+var p3=new Point(0,0);
+var p4=new Point(0,0);
+var obj=[],len=0;
+
+var pp1,pp2,pp3;
+function mouseDown(event){
+    flag=1;
+    p1.x=event.x-10;
+    p1.y=event.y-10;
+    moving=Moving(p1);
+    pp1=new Point(-1,-1);
+}
+
+function mouseDrag(event){
+    if(flag!=1){ 
+     return; 
+    }
+
+    p2.x=event.x-10;
+    p2.y=event.y-10;
+
+    if(moving>=0){
+	
+	pp1=new Point (obj[moving].x.x-(p1.x-p2.x),obj[moving].x.y-(p1.y-p2.y));	
+	pp2=new Point (obj[moving].y.x-(p1.x-p2.x),obj[moving].y.y-(p1.y-p2.y));	
+	pp3=new Point (obj[moving].z.x-(p1.x-p2.x),obj[moving].z.y-(p1.y-p2.y));	
+	clearCanvas(ctx,canvas); 	
+    	drawAllTri(moving);
+	drawCur(new Triangle(pp1,pp2,pp3));
+    }else{
+        
+    p3.x=p1.x;
+    p3.y=event.y-10;
+
+    p4.x=(p2.x+p3.x)/2;
+    p4.y=p1.y;    
+    
+    clearCanvas(ctx,canvas); 	
+    drawAllTri();
+    drawCur(new Triangle(p2,p3,p4));
+    moving=-1;
+    }
+}
+
+function Moving(p){
+    for(var i=obj.length-1;i>=0;i--){
+       if(triArea(p,obj[i].x,obj[i].y)+triArea(p,obj[i].y,obj[i].z)+triArea(p,obj[i].x,obj[i].z)==triArea(obj[i].z,obj[i].x,obj[i].y)){
+
+	return i;	
+	}
+    }
+    return -1;
+}
+
+function triArea(p1,p2,p3){
+  return 0.5*Math.abs((p2.x-p1.x)*(p3.y-p1.y)-(p3.x-p1.x)*(p2.y-p1.y)) ;
+}
+
+function mouseUp(event){
+  if(flag!=1)
+    return;
+  
+  if(moving>=0 && pp1.x!=-1){
+    obj[moving].x=NewPoint(pp1);
+    obj[moving].y=NewPoint(pp2);
+    obj[moving].z=NewPoint(pp3);
+   }else{
+    p2.x=event.x-10;
+    p2.y=event.y-10;
+    
+    p3.x=p1.x;
+    p3.y=event.y-10;
+
+    p1.x=(p2.x+p3.x)/2;
+    
+    if(triArea(p1,p2,p3)>0.5)
+    obj.push(new Triangle( NewPoint(p1),NewPoint(p2),NewPoint(p3)));
+    }
+    clearCanvas(ctx,canvas);
+    drawAllTri();
+    drawAllTri();
+    moving=-1;
+    flag=0;
+}
+
+function drawCur(tri){
+    	ctx.beginPath();
+	ctx.moveTo(tri.x.x,tri.x.y);
+	ctx.lineTo(tri.y.x,tri.y.y);
+	ctx.lineTo(tri.z.x,tri.z.y);
+	ctx.lineTo(tri.x.x,tri.x.y);	
+	ctx.closePath();
+    	ctx.strokeStyle="#000000";
+    	ctx.stroke();
+}
+
+function getRandomColor() {
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
+function mouseDouble(event){
+        moving=-1;
+	var cur = Moving(new Point(event.x-10,event.y-10));
+	if(obj.length>0&&cur>=0){
+	for(var i=cur+1;i<obj.length;i++)
+	  obj[i-1]=obj[i];
+	obj.length--;
+	}
+	clearCanvas(ctx,canvas); 
+   	drawAllTri(); 
+	flag=0;
+}
+
+function drawAllTri(moved){
+    for(var i=0;i<obj.length;i++){
+    if(moved === i)
+      continue;
+    ctx.beginPath();
+	var tri=obj[i];
+ 	ctx.moveTo(tri.x.x,tri.x.y);
+	ctx.lineTo(tri.y.x,tri.y.y);
+	ctx.lineTo(tri.z.x,tri.z.y);
+	ctx.lineTo(tri.x.x,tri.x.y);
+    ctx.closePath();
+    ctx.fillStyle=obj[i].c;
+    ctx.strokeStyle="#000000";
+    ctx.fill();
+    ctx.stroke();
+    }
+    
+}
+</script>
+<h3>Draw Triangles</h3>
+<pre>*Drag To Draw *Move Drawn Triangle *Double Tap to Delete</pre>
+</body>
+</html>
+
