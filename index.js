@@ -116,4 +116,6 @@ function getNewShape(shapeup, p1, p2) {
         return new Triangle(p1, p2);
     if (shapeup === "Circle")
         return new Circle(p1, p2);
+    if (shapeup === "Line")
+        return new Line(p1, p2);
 }
