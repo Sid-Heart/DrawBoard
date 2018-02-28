@@ -15,7 +15,7 @@ function undoStack(){
     if(this.top>0)
     obj= this.stack[--this.top];
     else
-    alert("Nothing to Undo!");
+    showAlert("Nothing to Undo!");
     clearCanvas(ctx, canvas);
     drawAll();
 }
@@ -24,7 +24,7 @@ function redoStack(){
     if (this.top<this.stack.length-1)
     obj= this.stack[++this.top];
     else
-    alert("Nothing to Redo!");
+    showAlert("Nothing to Redo!");
     clearCanvas(ctx, canvas);
     drawAll();
 }

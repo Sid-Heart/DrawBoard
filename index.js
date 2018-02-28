@@ -1,9 +1,9 @@
 var canvas = document.getElementById("myCanvas");
 canvas.width = window.innerWidth - 200;
-canvas.height = window.innerHeight - 120;
+canvas.height = window.innerHeight - 75;
 var ctx = canvas.getContext("2d");
 var flag = 0;
-Math.degToRad=(Math.PI / 180);
+Math.degToRad = (Math.PI / 180);
 var moving = -1;
 var p1 = new Point(0, 0);
 var p2 = new Point(0, 0);
@@ -69,7 +69,7 @@ function mouseUp(event) {
         p2.x = event.x - 10;
         p2.y = event.y - 10;
         var newShape = getNewShape(shapeType, p1, p2);
-        if (newShape.area() > 0.5){
+        if (newShape.area() > 0.5) {
             obj.push(newShape);
             tracker.record();
         }
@@ -83,7 +83,7 @@ function getRandomColor() {
     var letters = '0123456789ABCDEF';
     var color = '#';
     if (document.getElementById("pickerEnabled").checked) {
-        color=document.getElementById("pickedColor").value;
+        color = document.getElementById("pickedColor").value;
     } else {
         for (var i = 0; i < 6; i++) {
             color += letters[Math.floor(Math.random() * 16)];
@@ -127,11 +127,22 @@ function getNewShape(shapeup, p1, p2) {
         return new Circle(p1, p2);
     if (shapeup === "Line")
         return new Line(p1, p2);
-    if(shapeup === "Polygon")
-        return new Polygon(p1,p2,parseInt(document.getElementById("side").value));
+    if (shapeup === "Polygon" && parseInt(document.getElementById("side").value) <= 10)
+        return new Polygon(p1, p2, parseInt(document.getElementById("side").value));
+    else {
+        showAlert("Enter Valid Number Of Sides (5-10)");
+        return new Polygon(p1, p2, 0);
+    }
 }
 
-function setShapeType(st){
-    shapeType=st;
-    document.getElementById("shapeIndicator").innerHTML="Select Shape : "+st;
+function setShapeType(st) {
+    shapeType = st;
+    document.getElementById("shapeIndicator").innerHTML = "Select Shape : " + st;
+}
+
+function showAlert(msg) {
+    document.getElementById("alert").innerHTML = `<div class="alert">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    <strong style="text-align:left;">Alert!&nbsp &nbsp &nbsp &nbsp</strong>` + msg +
+        `</div>`;
 }

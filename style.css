@@ -1,3 +1,7 @@
+*{
+    text-decoration: none;
+}
+
 body div input {
     background-color: rgb(141, 201, 224); /* Green */
     border: none;
@@ -12,8 +16,11 @@ body div input {
 }
 
 .alert {
+    margin-top: 10px;
     padding: 10px;
-    background-color: #f44336;
+    margin-right: 200px;
+    text-align: center;
+    background-color: #ff9800;
     color: white;
 }
 

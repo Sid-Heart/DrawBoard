@@ -17,28 +17,25 @@
     <div class="floater">
         <h3 id="shapeIndicator" style="color:red;"> Select Shape : Line</h3>
         <hr>
-        <input type="button" value="Line" onclick="setShapeType('Line')">
+        <input type="button" value="Line" onmousedown="setShapeType('Line')">
         <br>
-        <input type="button" value="Triangle" onclick="setShapeType('Triangle')">
+        <input type="button" value="Triangle" onmousedown="setShapeType('Triangle')">
         <br>
-        <input type="button" value="Rectangle" onclick="setShapeType('Rectangle')">
+        <input type="button" value="Rectangle" onmousedown="setShapeType('Rectangle')">
         <br>
         <div>
-            <input style="padding: 15px 0px;width:80px;" type="button" value="Polygon" onclick="setShapeType('Polygon')" />
-            <input style="padding: 15px 0px;width:80px;" type="number" min="5" value="5" id="side" />
+            <input style="padding: 15px 0px;width:80px;" type="button" value="Polygon" onmousedown="setShapeType('Polygon')" />
+            <input style="padding: 15px 0px;width:76px;" type="number" min="5" value="5" id="side" max="10" />
         </div>
+        <input type="button" value="Circle" onmousedown="setShapeType('Circle')">
         <br>
-        <input type="button" value="Circle" onclick="setShapeType('Circle')">
-        <br>
-        <input type="button" value="Clear" onclick="if(confirm('Confirm Clear!')) { clearCanvas(ctx,canvas); obj=[]; }">
+        <input type="button" value="Clear" onmousedown="if(confirm('Confirm Clear!')) { clearCanvas(ctx,canvas); obj=[]; }">
         <hr>
         <div>
-            <input style="margin-bottom:10px;width:80px;margin-top:0px" type="button" value="Undo" onclick="tracker.undo()">
-            <input style="margin-bottom:10px;width:80px;margin-top:0px" type="button" value="Redo" onclick="tracker.redo()">
+            <input style="margin-bottom:10px;width:80px;margin-top:0px;padding: 15px 0px;" type="button" value="Undo" onmousedown="tracker.undo()">
+            <input style="margin-bottom:10px;width:80px;margin-top:0px;padding: 15px 0px;" type="button" value="Redo" onmousedown="tracker.redo()">
         </div>
         <!--Picker-->
-        <br>
-        <br>
         <hr>
         <div>
             <caption>Pick Color:</caption>
@@ -46,8 +43,6 @@
             <input style="padding: 0px 0px;width: 100px;" type="color" id="pickedColor" />
             <input style="padding: 0px 0px;width: 40px;" type="checkbox" id="pickerEnabled" />
         </div>
-        <br>
-        <br>
         <br>
         <hr>
         <input type="button" value="Save as PNG" id="saveAsPNG">
@@ -61,13 +56,8 @@
     <script type="text/javascript" src="polygon.js"> </script>
     <script type="text/javascript" src="circle.js"> </script>
     <script type="text/javascript" src="index.js"> </script>
-    <h3>Draw !!!</h3>
-    <!--
-    <div class="alert">
-        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-        <strong>Danger!</strong> *Drag To Draw *Move Drawn Triangle *Double Tap to Delete
+    <div id="alert">
     </div>
-    -->
 </body>
 
 </html>
