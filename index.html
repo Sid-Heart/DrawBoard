@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title> Draw Board </title>
     <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -13,8 +14,8 @@
         onmousemove="mouseDrag(event)" ondblclick="mouseDouble(event)" onmouseout="mouseUp(event)">
         Your browser does not support the HTML5 canvas tag.
     </canvas>
-    <div>
-        <h3 id="shapeIndicator" style="color:red;" > Select Shape : Line</h3>
+    <div class="floater">
+        <h3 id="shapeIndicator" style="color:red;"> Select Shape : Line</h3>
         <hr>
         <input type="button" value="Line" onclick="setShapeType('Line')">
         <br>
@@ -22,30 +23,51 @@
         <br>
         <input type="button" value="Rectangle" onclick="setShapeType('Rectangle')">
         <br>
+        <div>
+            <input style="padding: 15px 0px;width:80px;" type="button" value="Polygon" onclick="setShapeType('Polygon')" />
+            <input style="padding: 15px 0px;width:80px;" type="number" min="5" value="5" id="side" />
+        </div>
+        <br>
         <input type="button" value="Circle" onclick="setShapeType('Circle')">
         <br>
         <input type="button" value="Clear" onclick="if(confirm('Confirm Clear!')) { clearCanvas(ctx,canvas); obj=[]; }">
+        <hr>
+        <div>
+            <input style="margin-bottom:10px;width:80px;margin-top:0px" type="button" value="Undo" onclick="tracker.undo()">
+            <input style="margin-bottom:10px;width:80px;margin-top:0px" type="button" value="Redo" onclick="tracker.redo()">
+        </div>
         <!--Picker-->
+        <br>
         <br>
         <hr>
         <div>
+            <caption>Pick Color:</caption>
+            <br>
             <input style="padding: 0px 0px;width: 100px;" type="color" id="pickedColor" />
             <input style="padding: 0px 0px;width: 40px;" type="checkbox" id="pickerEnabled" />
         </div>
+        <br>
         <br>
         <br>
         <hr>
         <input type="button" value="Save as PNG" id="saveAsPNG">
     </div>
 
+    <script type="text/javascript" src="undostack.js"> </script>
     <script type="text/javascript" src="point.js"> </script>
     <script type="text/javascript" src="line.js"> </script>
     <script type="text/javascript" src="triangle.js"> </script>
     <script type="text/javascript" src="rectangle.js"> </script>
+    <script type="text/javascript" src="polygon.js"> </script>
     <script type="text/javascript" src="circle.js"> </script>
     <script type="text/javascript" src="index.js"> </script>
-    <h3>Draw Triangles</h3>
-    <pre>*Drag To Draw *Move Drawn Triangle *Double Tap to Delete</pre>
+    <h3>Draw !!!</h3>
+    <!--
+    <div class="alert">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        <strong>Danger!</strong> *Drag To Draw *Move Drawn Triangle *Double Tap to Delete
+    </div>
+    -->
 </body>
 
 </html>

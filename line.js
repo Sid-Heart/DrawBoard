@@ -42,8 +42,7 @@ function drawLine(){
 }
 
 function isInscibedLine(p){
-    console.log(new Line(new Point(Math.abs(this.x.x-this.y.x)/2,Math.abs(this.x.y-this.y.y)/2),p).area()<100);
-    return triArea(p,this.x,this.y)<window.innerWidth && new Line(new Point(Math.abs(this.x.x+this.y.x)/2,Math.abs(this.x.y+this.y.y)/2),p).area()<window.innerWidth/100;
+    return triArea(p,this.x,this.y)<window.innerWidth && new Line(new Point(Math.abs(this.x.x+this.y.x)/2,Math.abs(this.x.y+this.y.y)/2),p).area()<window.innerWidth/10;
 }
 
 function drawLinePartial() {

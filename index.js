@@ -3,6 +3,7 @@ canvas.width = window.innerWidth - 200;
 canvas.height = window.innerHeight - 120;
 var ctx = canvas.getContext("2d");
 var flag = 0;
+Math.degToRad=(Math.PI / 180);
 var moving = -1;
 var p1 = new Point(0, 0);
 var p2 = new Point(0, 0);
@@ -11,9 +12,11 @@ var p4 = new Point(0, 0);
 var obj = [], len = 0;
 var pp1, pp2, pp3;
 var shapeType = "Line";
+var tracker = new UndoStack();
+tracker.record();
 
 function mouseDown(event) {
-    console.log(shapeType);
+    console.log(tracker.stack);
     flag = 1;
     p1.x = event.x - 10;
     p1.y = event.y - 10;
@@ -61,12 +64,15 @@ function mouseUp(event) {
         return;
     if (moving >= 0 && pp1.x != -1) {
         obj[moving].move(pp1);
+        tracker.record();
     } else {
         p2.x = event.x - 10;
         p2.y = event.y - 10;
         var newShape = getNewShape(shapeType, p1, p2);
-        if (newShape.area() > 0.5)
+        if (newShape.area() > 0.5){
             obj.push(newShape);
+            tracker.record();
+        }
     }
     clearCanvas(ctx, canvas);
     drawAll();
@@ -93,10 +99,10 @@ function mouseDouble(event) {
         for (var i = cur + 1; i < obj.length; i++)
             obj[i - 1] = obj[i];
         obj.length--;
+        tracker.record();
     }
     clearCanvas(ctx, canvas);
     drawAll();
-    console.log(obj);
     flag = 0;
 }
 
@@ -121,6 +127,8 @@ function getNewShape(shapeup, p1, p2) {
         return new Circle(p1, p2);
     if (shapeup === "Line")
         return new Line(p1, p2);
+    if(shapeup === "Polygon")
+        return new Polygon(p1,p2,parseInt(document.getElementById("side").value));
 }
 
 function setShapeType(st){
