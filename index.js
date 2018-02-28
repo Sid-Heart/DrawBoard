@@ -63,7 +63,11 @@ function mouseUp(event) {
     if (flag != 1)
         return;
     if (moving >= 0 && pp1.x != -1) {
-        obj[moving].move(pp1);
+        var newShape=getNewShape(obj[moving].name,p1,pp1);
+        newShape.assignFrom(obj[moving]);
+        newShape.c = obj[moving].c;
+        newShape.move(pp1);
+        obj[moving]=newShape;
         tracker.record();
     } else {
         p2.x = event.x - 10;

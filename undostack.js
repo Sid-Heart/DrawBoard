@@ -18,6 +18,7 @@ function undoStack(){
     showAlert("Nothing to Undo!");
     clearCanvas(ctx, canvas);
     drawAll();
+    console.log(this.stack);
 }
 
 function redoStack(){
