@@ -41,12 +41,12 @@ body div input {
 
 div h3 {
     border: none;
-    margin-top: 1ch;
+    margin : 0px;
     color: rgb(141, 201, 224);
     text-align: center;
     text-decoration: none;
-    display: inline-block;
-    font-size: 16px;}
+    font-size: 16px;
+}
 
 .floater {
     float : right;
