@@ -16,7 +16,6 @@ var tracker = new UndoStack();
 tracker.record();
 
 function mouseDown(event) {
-    console.log(tracker.stack);
     flag = 1;
     p1.x = event.x - 10;
     p1.y = event.y - 10;
