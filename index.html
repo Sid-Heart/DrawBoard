@@ -6,47 +6,74 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title> Draw Board </title>
     <link rel="stylesheet" href="style.css" type="text/css" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script type="text/javascript" src="jscolor.js"> </script>
 </head>
 
 <body>
-
-    <canvas id="myCanvas" width="500" height="400" style="border:1px solid #000000;" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)"
-        onmousemove="mouseDrag(event)" ondblclick="mouseDouble(event)" onmouseout="mouseUp(event)">
-        Your browser does not support the HTML5 canvas tag.
-    </canvas>
-    <div class="floater">
-        <h3 id="shapeIndicator" style="color:red;"> Select Shape : Line</h3>
+    <div class="w3-sidebar w3-bar-block w3-card" style="width:200px;right:0;">
+        <h2>Draw Tools</h2>
         <hr>
-        <input type="button" value="Line" onmousedown="setShapeType('Line')">
-        <br>
-        <input type="button" value="Triangle" onmousedown="setShapeType('Triangle')">
-        <br>
-        <input type="button" value="Rectangle" onmousedown="setShapeType('Rectangle')">
-        <br>
-        <div>
-            <input style="padding: 15px 0px;width:80px;" type="button" value="Polygon" onmousedown="setShapeType('Polygon')" />
-            <input style="padding: 15px 0px;width:76px;" type="number" min="5" value="5" id="side" max="10" />
+        <h5 id="shapeIndicator" style="color:teal;"> Selected : Line</h5>
+        <button class="w3-button w3-green w3-round-large w3-left-align" onclick="myAccFunc()">
+            Shape Select
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div id="shapeTool" class="w3-hide w3-white  w3-animate-right">
+            <input class=" w3-button w3-button-alter w3-blue" type="button" value="Line" onmousedown="setShapeType('Line')">
+            <br>
+            <input class="w3-button w3-button-alter w3-blue" type="button" value="Triangle" onmousedown="setShapeType('Triangle')">
+            <br>
+            <input class="w3-button w3-button-alter w3-blue" type="button" value="Rectangle" onmousedown="setShapeType('Rectangle')">
+            <br>
+            <div class="w3-row-padding" style="margin:0px">
+                <div class="w3-half">
+                    <input class="w3-button w3-button-alter w3-blue" style="margin:1px 0px 1px 0px;width:100px;" type="button" value="Polygon"
+                        onmousedown="setShapeType('Polygon')" />
+                </div>
+                <div class="w3-half">
+                    <input class="w3-input" style="margin:1px 0px 1px 0px;width:50px;" type="number" min="5" value="5" id="side" max="10" />
+                </div>
+            </div>
+            <input class="w3-button w3-button-alter w3-blue" type="button" value="Circle" onmousedown="setShapeType('Circle')">
         </div>
-        <input type="button" value="Circle" onmousedown="setShapeType('Circle')">
-        <br>
-        <input type="button" value="Clear" onmousedown="if(confirm('Confirm Clear!')) { clearCanvas(ctx,canvas); obj=[]; }">
+        <hr>
+        <input class="w3-button w3-green w3-round-large w3-left-align" type="button" value="Clear" onmousedown="if(confirm('Confirm Clear!')) { clearCanvas(ctx,canvas); obj=[]; }">
         <hr>
         <div>
-            <input style="margin-bottom:10px;width:80px;margin-top:0px;padding: 15px 0px;" type="button" value="Undo" onmousedown="tracker.undo()">
-            <input style="margin-bottom:10px;width:80px;margin-top:0px;padding: 15px 0px;" type="button" value="Redo" onmousedown="tracker.redo()">
+            <h5 style="color:teal;">Edit Tools :</h5>
+            <input class="w3-button w3-blue" style="width:70px" type="button" value="Undo" onmousedown="tracker.undo()">
+            <input class="w3-button w3-blue" style="width:70px" type="button" value="Redo" onmousedown="tracker.redo()">
         </div>
         <!--Picker-->
         <hr>
         <div>
-            <caption><b>Pick Color:</b></caption>
-            <br>
-            <input style="padding: 0px 0px;width: 100px;" type="color" id="pickedColor" />
-            <input style="padding: 0px 0px;width: 40px;" type="checkbox" id="pickerEnabled" />
+            <h5 style="color:teal;">
+                Color Picker:
+            </h5>
+            <div class="w3-row-padding">
+                <input class="w3-input w3-half jscolor jscolor-active" style="width:100px;margin-left:15px;margin-right:15px" id="pickedColor"
+                    value="0000FF" />
+                <input class="w3-half" style="margin-left:15px" type="checkbox" id="pickerEnabled" />
+                <label for="pickerEnabled"></label>
+            </div>
         </div>
         <hr>
-        <input type="button" value="Save as PNG" id="saveAsPNG">
+        <h5 style="color:teal;"> Save : </h5>
+        <input class="w3-button w3-blue" type="button" value="Save as PNG" id="saveAsPNG">
     </div>
 
+    <div id="alert">
+    </div>
+
+    <div class="w3-container w3-teal" style="">
+        <h1>Drawing Board</h1>
+    </div>
+    <canvas id="myCanvas" width="500" height="400" style="border:1px solid #000000;" onmousedown="mouseDown(event)" onmouseup="mouseUp(event)"
+        onmousemove="mouseDrag(event)" ondblclick="mouseDouble(event)" onmouseout="mouseUp(event)">
+        Your browser does not support the HTML5 canvas tag.
+    </canvas>
     <script type="text/javascript" src="undostack.js"> </script>
     <script type="text/javascript" src="point.js"> </script>
     <script type="text/javascript" src="line.js"> </script>
@@ -55,8 +82,19 @@
     <script type="text/javascript" src="polygon.js"> </script>
     <script type="text/javascript" src="circle.js"> </script>
     <script type="text/javascript" src="index.js"> </script>
-    <div id="alert">
-    </div>
+    <script>
+        function myAccFunc() {
+            var x = document.getElementById("shapeTool");
+            if (x.className.indexOf("w3-show") == -1) {
+                x.className += " w3-show";
+                x.previousElementSibling.className += " w3-green";
+            } else {
+                x.className = x.className.replace(" w3-show", "");
+                x.previousElementSibling.className =
+                    x.previousElementSibling.className.replace(" w3-green", "");
+            }
+        }
+    </script>
 </body>
 
 </html>

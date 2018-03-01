@@ -1,6 +1,6 @@
 var canvas = document.getElementById("myCanvas");
 canvas.width = window.innerWidth - 200;
-canvas.height = window.innerHeight - 75;
+canvas.height = window.innerHeight - 82;
 var ctx = canvas.getContext("2d");
 var flag = 0;
 Math.degToRad = (Math.PI / 180);
@@ -17,8 +17,8 @@ tracker.record();
 
 function mouseDown(event) {
     flag = 1;
-    p1.x = event.x - 10;
-    p1.y = event.y - 10;
+    p1.x = event.x -5;
+    p1.y = event.y - 80;
     moving = Moving(p1);
     pp1 = new Point(-1, -1);
 }
@@ -28,8 +28,8 @@ function mouseDrag(event) {
         return;
     }
 
-    p2.x = event.x - 10;
-    p2.y = event.y - 10;
+    p2.x = event.x - 5;
+    p2.y = event.y - 80;
 
     if (moving >= 0) {
         pp1 = new Point((p2.x - p1.x), (p2.y - p1.y));
@@ -69,8 +69,8 @@ function mouseUp(event) {
         obj[moving]=newShape;
         tracker.record();
     } else {
-        p2.x = event.x - 10;
-        p2.y = event.y - 10;
+        p2.x = event.x - 5;
+        p2.y = event.y - 80;
         var newShape = getNewShape(shapeType, p1, p2);
         if (newShape.area() > 0.5) {
             obj.push(newShape);
@@ -86,7 +86,7 @@ function getRandomColor() {
     var letters = '0123456789ABCDEF';
     var color = '#';
     if (document.getElementById("pickerEnabled").checked) {
-        color = document.getElementById("pickedColor").value;
+        color = "#"+document.getElementById("pickedColor").value;
     } else {
         for (var i = 0; i < 6; i++) {
             color += letters[Math.floor(Math.random() * 16)];
@@ -97,7 +97,7 @@ function getRandomColor() {
 
 function mouseDouble(event) {
     moving = -1;
-    var cur = Moving(new Point(event.x - 10, event.y - 10));
+    var cur = Moving(new Point(event.x - 5, event.y - 80));
     if (obj.length > 0 && cur >= 0) {
         for (var i = cur + 1; i < obj.length; i++)
             obj[i - 1] = obj[i];
@@ -140,12 +140,12 @@ function getNewShape(shapeup, p1, p2) {
 
 function setShapeType(st) {
     shapeType = st;
-    document.getElementById("shapeIndicator").innerHTML = "Select Shape : " + st;
+    document.getElementById("shapeIndicator").innerHTML = "Selected : " + st;
 }
 
 function showAlert(msg) {
-    document.getElementById("alert").innerHTML = `<div class="alert">
-    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-    <strong style="text-align:left;">Alert!&nbsp &nbsp &nbsp &nbsp</strong>` + msg +
+    document.getElementById("alert").innerHTML = `<div class="w3-panel w3-red w3-display-container alert">
+    <span class="w3-button w3-red w3-large w3-display-topright" onclick="this.parentElement.style.display='none';">&times;</span>
+    <h3> Alert! </h3>` + msg +
         `</div>`;
 }
